@@ -19,9 +19,57 @@ public class ArrayMatch {
 	 * Preconditions: a and b have the same number of elements
 	 */
 	public static boolean match(int[] a, int[] b) {
-		// TODO complete the implementation
+		// compute array length once to save time
+		int len = a.length;
+
+		// Check if a and b are identical
+		if (fullMatch(a, b, len)){
+			return true;
+		}
+
+		// if array length is even
+		if (len % 2 == 0){
+			// Split a and b in half
+			int[] a1 = new int[len/2];
+			int[] a2 = new int[len/2];
+			int[] b1 = new int[len/2];
+			int[] b2 = new int[len/2];
+
+			// fill arrays
+			for (int i = 0; i < a.length/2; i++) {
+				a1[i] = a[i];
+				b1[i] = b[i];
+				a2[i] = a[i + len/2];
+				b2[i] = b[i + len/2];
+			}	
+
+			// a1 matches b1 and a2 matches b2
+			if (fullMatch(a1, b1, len/2) && fullMatch(a2, b2, len/2)) {
+				return true;
+			}
+
+			// a1 matches b1 and a1 matches b2
+			if (fullMatch(a1, b1, len/2) && fullMatch(a1, b2, len/2)) {
+				return true;
+			}
+
+			// a2 matches b1 and a2 matches b2
+			if (fullMatch(a2, b1, len/2) && fullMatch(a2, b2, len/2)) {
+				return true;
+			}
+		}
 		
-		return false; // change this - set to false so it compiles
+		return false;
+	}
+
+	private static boolean fullMatch(int[] a, int[] b, int len) {
+		// Compare a and b element by element
+		for (int i = 0; i < len; i++) {
+			if (a[i] != b[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*
