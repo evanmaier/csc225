@@ -1,7 +1,7 @@
 /* 
  * CSC 225 - Assignment 3
- * Name: 
- * Student number:
+ * Name: Evan Maier
+ * Student number: V00891872
  */
  
 import java.io.File;
