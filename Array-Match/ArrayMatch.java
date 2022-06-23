@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
+import java.util.Arrays;
 
 public class ArrayMatch {
 
@@ -19,52 +20,53 @@ public class ArrayMatch {
 	 * Preconditions: a and b have the same number of elements
 	 */
 	public static boolean match(int[] a, int[] b) {
-		// compute array length once to save time
+		// compute array length
 		int len = a.length;
 
-		// Check if a and b are identical
-		if (fullMatch(a, b, len)){
+		// return true if a and b are identical
+		if (isEqual(a, b)) {
 			return true;
 		}
 
-		// if array length is even
-		if (len % 2 == 0){
-			// Split a and b in half
-			int[] a1 = new int[len/2];
-			int[] a2 = new int[len/2];
-			int[] b1 = new int[len/2];
-			int[] b2 = new int[len/2];
-
-			// fill arrays
-			for (int i = 0; i < a.length/2; i++) {
-				a1[i] = a[i];
-				b1[i] = b[i];
-				a2[i] = a[i + len/2];
-				b2[i] = b[i + len/2];
-			}	
-
-			// a1 matches b1 and a2 matches b2
-			if (fullMatch(a1, b1, len/2) && fullMatch(a2, b2, len/2)) {
-				return true;
-			}
-
-			// a1 matches b1 and a1 matches b2
-			if (fullMatch(a1, b1, len/2) && fullMatch(a1, b2, len/2)) {
-				return true;
-			}
-
-			// a2 matches b1 and a2 matches b2
-			if (fullMatch(a2, b1, len/2) && fullMatch(a2, b2, len/2)) {
-				return true;
-			}
+		// return false if array length is odd
+		if (len % 2 > 0) {
+			return false;
 		}
 		
+		// split arrays
+		int[] a1 = Arrays.copyOfRange(a, 0, len/2);
+		int[] a2 = Arrays.copyOfRange(a, len/2, len);
+		int[] b1 = Arrays.copyOfRange(b, 0, len/2);
+		int[] b2 = Arrays.copyOfRange(b, len/2, len);
+
+		// match sub arrays
+		boolean a1b1 = match(a1, b1);
+		boolean a1b2 = match(a1, b2);
+		boolean a2b1 = match(a2, b1);
+		boolean a2b2 = match(a2, b2);
+
+		// condition a
+		if (a1b1 && a2b2) {
+			return true;
+		}
+		
+		// condition b
+		if (a1b1 && a1b2) {
+			return true;
+		}
+
+		// condition c
+		if (a2b1 && a2b2) {
+			return true;
+		}
+
+		// default
 		return false;
 	}
 
-	private static boolean fullMatch(int[] a, int[] b, int len) {
+	private static boolean isEqual(int[] a, int[] b) {
 		// Compare a and b element by element
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < a.length; i++) {
 			if (a[i] != b[i]) {
 				return false;
 			}
