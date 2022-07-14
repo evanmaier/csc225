@@ -11,7 +11,7 @@ public class A4Tester {
     testHeapOperations();
 
     // Uncomment the following line once you have completed Part 1
-    // testBSTOperations();
+    testBSTOperations();
 
     System.out.println("\nPASSED " + testPassCount + "/" + testCount + " TESTS");
 
