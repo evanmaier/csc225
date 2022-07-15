@@ -16,11 +16,11 @@ public class A4Tester {
     System.out.println("\nPASSED " + testPassCount + "/" + testCount + " TESTS");
 
     // Uncomment the following once you have completed Parts 1 and 2
-    /*
-     * System.out.println();
-     * System.out.println("Analysis results:");
-     * testFrequencyReport(args);
-     */
+
+    System.out.println();
+    System.out.println("Analysis results:");
+    testFrequencyReport(args);
+
   }
 
   public static void testHeapOperations() {
