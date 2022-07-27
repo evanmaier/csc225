@@ -31,8 +31,8 @@ public class GraphAlgorithms {
     visited.add(v);
     // Visit unvisited neighboors of v
     LinkedList<PixelVertex> neighbours = v.getNeighbours();
-    while (neighbours.size() > 0) {
-      PixelVertex next = neighbours.removeFirst();
+    while (!neighbours.isEmpty()) {
+      PixelVertex next = neighbours.poll();
       if (!visited.contains(next)) {
         FloodFillDFSRecursive(next, writer, fillColour, visited);
       }
@@ -50,8 +50,27 @@ public class GraphAlgorithms {
    * writer.setPixel(x,y,c);
    */
   public static void FloodFillBFS(PixelVertex v, PixelWriter writer, Color fillColour) {
-    writer.setPixel(v.getX(), v.getY(), fillColour);
-    // TODO: implement this method
-  }
+    // Create a vector to track visited nodes
+    Vector<PixelVertex> visited = new Vector<PixelVertex>();
+    // Create a queue to store nodes to visit
+    LinkedList<PixelVertex> queue = new LinkedList<PixelVertex>();
+    // Add current node to queue
+    queue.add(v);
 
+    while (!queue.isEmpty()) {
+      // Dequeue a node, colour it, and mark as visited
+      v = queue.poll();
+      writer.setPixel(v.getX(), v.getY(), fillColour);
+      visited.add(v);
+      // Get neighbours of v
+      LinkedList<PixelVertex> neighbours = v.getNeighbours();
+      while (!neighbours.isEmpty()) {
+        // Enqueue unvisited neighbours
+        PixelVertex next = neighbours.poll();
+        if (!visited.contains(next)) {
+          queue.add(next);
+        }
+      }
+    }
+  }
 }
